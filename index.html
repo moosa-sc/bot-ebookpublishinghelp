@@ -345,7 +345,7 @@
 	import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 </script>
 
-<!-- Floating Chat Button -->
+<!-- <!-- Floating Chat Button -->
 <div id="chat-toggle">💬</div>
 
 <!-- Chat Container -->
@@ -356,7 +356,23 @@
     <input type="text" id="user-input" placeholder="Type your message..." />
     <button onclick="sendMessage()">Send</button>
   </div>
-</div>
+</div> -->
+	<script>
+  (function(d,t) {
+    var BASE_URL="https://chatwoot-production-b3b5.up.railway.app";
+    var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+    g.src=BASE_URL+"/packs/js/sdk.js";
+    g.async = true;
+    s.parentNode.insertBefore(g,s);
+    g.onload=function(){
+      window.chatwootSDK.run({
+        websiteToken: 'jzcodKAACt8sbG2ZBhv3KeYc',
+        baseUrl: BASE_URL
+      })
+    }
+  })(document,"script");
+</script>
+
 
 <script>
   const chatToggle = document.getElementById('chat-toggle');
