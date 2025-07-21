@@ -61,6 +61,10 @@
   .branding--link, .woot--powered-by {
     display: none !important;
   }
+		a[href*="chatwoot.com"] {
+  display: none !important;
+}
+
 </style>
 
 </style>
@@ -478,19 +482,20 @@
   });
 </script>
 	<script>
-  // Wait for Chatwoot widget to load and then hide the branding
+  // Wait until Chatwoot loads and hide the branding element
   const hideChatwootBranding = () => {
     const interval = setInterval(() => {
-      const branding = document.querySelector('.woot--powered-by');
+      const branding = document.querySelector('[href*="chatwoot.com"]');
       if (branding) {
         branding.style.display = 'none';
-        clearInterval(interval); // Stop checking
+        clearInterval(interval); // Stop polling
       }
-    }, 500); // check every 500ms
+    }, 500);
   };
 
   window.addEventListener('chatwoot:ready', hideChatwootBranding);
 </script>
+
 
 
 </body>
