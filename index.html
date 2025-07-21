@@ -67,9 +67,18 @@
       text-decoration: underline;
     }
 
-    /* Hide Chatwoot branding */
-    .branding--link, .woot--powered-by {
+    /* Hide Chatwoot branding with high specificity */
+    .branding--link, 
+    .woot--powered-by, 
+    a[href*="chatwoot.com"][class*="branding"], 
+    [class*="woot--powered-by"], 
+    .text-n-slate-11[href*="chatwoot.com"] {
       display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      height: 0 !important;
+      width: 0 !important;
+      overflow: hidden !important;
     }
   </style>
 </head>
@@ -114,11 +123,40 @@
 
 <!-- Hide Chatwoot Branding -->
 <script>
+  // Fallback: Hide branding on chatwoot:ready
   window.addEventListener('chatwoot:ready', () => {
-    const branding = document.querySelector('.branding--link, .woot--powered-by');
-    if (branding) {
-      branding.style.display = 'none';
-    }
+    const brandingElements = document.querySelectorAll('.branding--link, .woot--powered-by, a[href*="chatwoot.com"]');
+    brandingElements.forEach(el => {
+      el.style.display = 'none';
+      el.style.visibility = 'hidden';
+      el.style.opacity = '0';
+      el.style.height = '0';
+      el.style.width = '0';
+      el.style.overflow = 'hidden';
+    });
+  });
+
+  // MutationObserver to catch dynamically added branding
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.addedNodes.length) {
+        const brandingElements = document.querySelectorAll('.branding--link, .woot--powered-by, a[href*="chatwoot.com"]');
+        brandingElements.forEach(el => {
+          el.style.display = 'none';
+          el.style.visibility = 'hidden';
+          el.style.opacity = '0';
+          el.style.height = '0';
+          el.style.width = '0';
+          el.style.overflow = 'hidden';
+        });
+      }
+    });
+  });
+
+  // Observe the body for added nodes
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
   });
 </script>
 
