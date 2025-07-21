@@ -471,6 +471,21 @@
     if (e.key === "Enter") sendMessage();
   });
 </script>
+	<script>
+  // Wait for Chatwoot widget to load and then hide the branding
+  const hideChatwootBranding = () => {
+    const interval = setInterval(() => {
+      const branding = document.querySelector('.woot--powered-by');
+      if (branding) {
+        branding.style.display = 'none';
+        clearInterval(interval); // Stop checking
+      }
+    }, 500); // check every 500ms
+  };
+
+  window.addEventListener('chatwoot:ready', hideChatwootBranding);
+</script>
+
 
 </body>
 </html>
